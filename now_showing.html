@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Now Showing</title>
+    <link rel="icon" href="images/1771660.png" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+    <script src="http://courses.cs.cityu.edu.hk/cs2204/cw3/cinemas.js"></script>
+    <script src="movies.js"></script>
+    <script>
+        function getMovieName(movieArray, id) {
+            for (let i=0; i<movieArray.length; i++) {
+                if (movieArray[i].id == id) return movieArray[i].name;
+            }
+            return undefined;
+        }
+
+        function getMovieThumbnail(movieArray, id) {
+            for (let i=0; i<movieArray.length; i++) {
+                if (movieArray[i].id == id) return movieArray[i].thumbnail;
+            }
+            return undefined;
+        }
+
+                
+        function passval(id){
+            var cinname=document.querySelector("#cinema").value;
+            var name=document.querySelector(`${"#name"+id}`).value;
+            var time=document.querySelector(`${"#time"+id}`).value;
+            var house=document.querySelector(`${"#hid"+id}`).value;
+
+            localStorage.setItem("namevalue", name);            
+            localStorage.setItem("timevalue", time);           
+            localStorage.setItem("housevalue", house);
+            localStorage.setItem("cinname", cinname);
+
+            return true;
+        }
+    </script>
+    <style>
+        #main_container{
+            background-color: white;
+            text-align: center;
+            border: 1px solid;   
+        }
+
+        #cinema_list{
+            color: white;
+            font-size: 25px;
+            padding: 30px;
+            background-color: #333;
+            margin-bottom: 15px;
+        }
+
+        input{
+            font-size: 20px;
+            margin: 10px;
+        }
+
+        select{
+            font-size: 20px;
+        }
+
+        .movies img{
+            height: 70px;
+            width: 110px;
+            border: 2px solid black;
+        }
+
+        .movies input, .movies select{
+            position: relative;
+            bottom: 30px;
+        }
+
+
+
+        .location{
+            text-align: center;
+        }
+
+        .address{
+            display: grid;
+            grid-template-columns: auto auto auto;
+            padding: 10px;
+        }
+
+        .map{
+            margin-right: 10px; 
+        }
+
+        .map img{
+            border: 2px solid #333;
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <ul>
+            <li><a href="star.html">Home</a></li>
+            <li><a href="now_showing.html" class="active">Now showing</a></li>
+            <li><a href="Ticket.html">Ticket</a></li>
+        </ul>  
+    </nav>
+    <header>
+        <img src="images/1771660.png" id="logo" alt="City Cinema Logo" title="City Cinema Logo">
+        <h1>City Cinema</h1>
+    </header>
+    <div id="main_container">
+        <div id="cinema_list">
+            <form method="get" action="Ticket.html">
+                <label for="cinema">Select Cinema:</label>
+                <select id="cinema" name="cinema">
+                    <option value="" disabled selected>Select a Cinema</option>
+                </select>
+            </form>
+        </div>
+        <div class="movies"></div>
+    </div>
+    <div class="location">
+        <h3>Locations:</h3>
+        <div class="address">
+            <div class="map">
+                <img src="images/184_chuy_ave.png" alt="map">
+                <h4>Star Cinema</h4>
+                <p>Address: 184 Chuy Avenue, Bishkek, Kyrgyzstan</p>
+            </div>
+            <div class="map">
+                <img src="images/80_isanov_str.png" alt="map">
+                <h4>VICTORY</h4>
+                <p>Address: 80 Isanov Street, Bishkek, Kyrgyzstan</p>
+            </div>
+            <div class="map">
+                <img src="images/prospekt_mira_47.png" alt="map">
+                <h4>Pop Corn Time</h4>
+                <p>Address: 47 Prospekt Mira, Bishkek, Kyrgyzstan</p>
+            </div>
+        </div>
+    </div>
+    <footer id="footer">
+        <p>Copyright of resources belong to corresponding copyright owners - fair use for educational purposes  / <a href="star.html">Home</a> / <a href="design.html">Design</a> /</p>
+    </footer>
+</body>
+</html>
+<script>
+    let x = getCinemas();
+    var cinemas=new Array();
+    for(i=0;i<x.length;i++){
+        cinemas.push(x[i].branchName);
+    }
+
+    a = document.querySelector("#cinema");
+    cinemas.forEach(item => {
+        const option = document.createElement("option");
+        option.textContent = item;
+        option.value = item;
+        a.appendChild(option);
+    });
+    
+    container = document.querySelector(".movies");
+ 
+    a.onchange = function(){         
+        container.innerHTML="";
+        for(i=0;i<x[a.selectedIndex-1].movies.length;i++){
+            container.innerHTML+=`
+            <div class="movie"> 
+                <form method="get" action="Ticket.html"> 
+                    <img src=${getMovieThumbnail(getMovies(),x[a.selectedIndex-1].movies[i].id)}>     
+                    <input type="text" id=${"name"+i} name="name" value=${getMovieName(getMovies(), x[a.selectedIndex-1].movies[i].id)} disabled>
+                    <select id=${"time"+i} name="time"></select>
+                    <input type="hidden" name="house" id=${"hid"+i} value="">
+                    <input type="submit" value="Buy Ticket" onclick="passval(${i});">
+                </form>
+            </div>`
+            ar=new Array();
+            z = document.querySelector(`${"#time"+i}`);
+            for(j=0;j<x[a.selectedIndex-1].movies[i].shows.length;j++){
+                ar.push(x[a.selectedIndex-1].movies[i].shows[j].datetime);
+            }
+            ar.forEach(item => {
+                const option = document.createElement("option");
+                option.textContent = item;
+                option.value = item;
+                z.appendChild(option);
+            });
+            hidVal=document.querySelector(`${"#hid"+i}`);
+            selInd=z.selectedIndex;
+            hidVal.value=x[a.selectedIndex-1].movies[i].shows[selInd].house;
+        }
+    }
+    
+    if(performance.navigation.type == 2){
+        location.reload(true);
+    }
+</script>

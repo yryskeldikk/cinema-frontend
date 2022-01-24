@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Page</title>
+    <link rel="icon" href="images/1771660.png" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+    <style>
+        input{
+            font-size: 20px;
+            margin: 0 0 20px 20px;
+        }
+
+        h3{
+            margin: 20px;
+        }
+
+        .ticket{
+            border: 1px solid black;
+            padding: 20px;
+            margin: 20px
+        }
+
+        @media print{
+            body * {
+                visibility: hidden;
+            }
+            .ticket_list, .ticket_list * {
+                visibility: visible;
+            }
+            .ticket{
+                page-break-after: always;
+             }
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <ul>
+            <li><a href="star.html">Home</a></li>
+            <li><a href="now_showing.html">Now showing</a></li>
+            <li><a href="Ticket.html">Ticket</a></li>
+        </ul>  
+    </nav>
+    <header>
+        <img src="images/1771660.png" id="logo" alt="City Cinema Logo" title="City Cinema Logo"><br>
+        <h1>City Cinema</h1>
+    </header>
+    <div>
+        <h3>Tickets:</h3>
+        <div class="ticket_list"></div>
+        <div>
+            <input type="button" value="Print" onclick="window.print();">
+        </div>
+    </div>
+   
+    <footer id="footer"> 
+        <p>Copyright of resources belong to corresponding copyright owners - fair use for educational purposes  / <a href="star.html">Home</a> / <a href="design.html">Design</a> /</p>
+    </footer>
+</body>
+</html>
+<script>
+    var seats = JSON.parse(window.localStorage.getItem("seats"));
+    var a = localStorage.getItem("a");
+    var b = localStorage.getItem("b");
+    var c = localStorage.getItem("c");
+    var d = localStorage.getItem("d");
+    var tickets = document.querySelector(".ticket_list");
+    for(i in seats){
+        tickets.innerHTML+=`
+        <div class="ticket">
+            <h3>Ticket ${parseInt(i)+1}</h3>
+            <p>Cinema: ${a}</p>
+            <p>Movie: ${b}</p>
+            <p>Date Time: ${c}</p>
+            <p>House No.: ${d}</p>
+            <p>Seat: ${seats[i]}</p>
+        </div>
+        `
+    }
+</script>

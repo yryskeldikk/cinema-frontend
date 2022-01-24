@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="icon" href="images/1771660.png" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+    <script src="movies.js"></script>
+    <script>
+        function switchVideo(n){
+            vid=document.querySelector("video");
+            vid.src=getMovies()[n].src;
+            vid.load();
+        }
+        
+    </script>
+    <style>
+        #main{
+            margin: 10px;
+        }
+
+        #title{
+            text-align: center;
+            padding: 20px 0 30px 0;
+        }
+
+        #title h2{
+            font-size: 40px;
+            display: inline;  
+        }    
+
+        #title img{
+            display: inline;
+            width: 55px 
+        }
+
+        video{
+            float: left;
+            width: 70%;
+            height: 510px;
+        }
+
+        #advertisement{
+            width: 30%;
+            height: 510px;
+        }
+        
+        .movie_list{
+            display: table;
+            width: 99%;
+            min-width: 900px;
+            margin: 0 7px 10px 7px;
+        }
+
+        #now_showing{
+            float: left;
+            width: 50%;
+            height: 24em;
+            border: 2px solid black;
+            box-sizing: border-box; 
+        }
+
+        #upcoming{
+            float: left;
+            width: 50%;
+            height: 24em;
+            border: 2px solid black;
+            box-sizing: border-box;
+        }
+
+        .movie{
+            margin: 10px;
+        }
+
+        h3{
+            padding-left: 10px;
+        }
+
+        .movie img{
+            float: left;
+            padding-right: 10px;
+            height: 70px;
+            width: 100px;
+        }
+
+        .movie li:first-child{
+            cursor: pointer;
+        }
+
+        .movie ul{
+            position: relative;
+            bottom: 10px;
+            list-style: none;
+        }
+
+        h4, p{
+            display: inline;
+        }
+
+        .movie ul p:first-child{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="images/1771660.png" id="logo" alt="City Cinema Logo" title="City Cinema Logo">
+        <h1>City Cinema</h1>
+    </header>
+    <nav id="navbar">
+        <ul>
+            <li><a href="star.html" class="active">Home</a></li>
+            <li><a href="now_showing.html">Now showing</a></li>
+            <li><a href="Ticket.html">Ticket</a></li>
+        </ul>  
+    </nav>
+    <div id="main">
+        <div id="title">
+            <img src="images/bigbuck.jpg" alt="bigbuck">
+            <h2>Big Buck Bunny</h2>
+        </div>
+        <img src="images/Big_buck_bunny_poster_big.jpg" id="advertisement">
+        <video controls id="videoPlayer" autoplay>
+
+        </video>
+    </div>
+    <div class="movie_list">
+        <div id="now_showing">
+            <h3>Now showing:</h3>
+            <div id="now_showing_movies"></div>
+        </div>
+        <div id="upcoming">
+            <h3>Upcoming:</h3>
+            <div id="upcoming_movies"></div>
+        </div>
+    </div>
+    
+    <footer id="footer">
+        <p>Copyright of resources belong to corresponding copyright owners - fair use for educational purposes  / <a href="star.html">Home</a> / <a href="design.html">Design</a> /</p>
+    </footer>
+</body>
+</html>
+<script>
+    for(j=0;j<getMovies().length;j++){
+        if(getMovies()[j].type=="now"){
+            document.querySelector("#now_showing_movies").innerHTML+=`
+                <div class="movie">
+                    <h4>Name:</h4> <p>${getMovies()[j].name}</p><br>
+                    <ul>
+                        <li onclick="switchVideo(${j})"><img src="${getMovies()[j].thumbnail}"></li>
+                        <li><p>Director:</p> <p>${getMovies()[j].director}</p></li>
+                        <li><p>Cast:</p> <p>${getMovies()[j].cast}</p></li>
+                        <li><p>Duration:</p> <p>${getMovies()[j].duration} min</p></li>
+                    </ul>
+                </div>
+                `
+        }
+        else{
+            document.querySelector("#upcoming_movies").innerHTML+=`
+                <div class="movie">
+                    <h4>Name:</h4> <p>${getMovies()[j].name}</p><br>
+                    <ul>
+                        <li onclick="switchVideo(${j})"><img src="${getMovies()[j].thumbnail}"></li>
+                        <li><p>Director:</p> <p>${getMovies()[j].director}</p></li>
+                        <li><p>Cast:</p> <p>${getMovies()[j].cast}</p></li>
+                        <li><p>Duration:</p> <p>${getMovies()[j].duration} min</p></li>
+                    </ul>
+                </div>
+                `
+        }
+    }
+
+    let i=0;
+    const videoCount=getMovies().length;
+    const player=document.querySelector("#videoPlayer");
+
+    function videoPlay(n){
+        player.setAttribute("src", getMovies()[n].src);
+        player.autoplay=true;
+        player.load();
+    }
+    
+    player.addEventListener('ended', myHandler , false);
+
+    videoPlay(0);
+
+    function myHandler(){
+            if(i==videoCount){
+                i=0;
+            }
+            else{
+                i++;
+            }
+            setTimeout(videoPlay, 2000, i);
+        }       
+</script>

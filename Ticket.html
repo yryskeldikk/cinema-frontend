@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket</title>
+    <link rel="icon" href="images/1771660.png" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+    <script src="http://courses.cs.cityu.edu.hk/cs2204/cw3/cinemas.js"></script>
+    <script>
+        function rowfind(x){
+            k=x.rowIndex;
+            if(k==0){
+                r='A';
+            }
+            else if(k==1){
+                r="B";
+            }
+            else{
+                r='C';
+            }
+            return r;
+        }
+    </script>
+    <style>
+        p,h3{
+            display: inline;
+        }
+
+        .tab_list{
+            display: grid;
+            grid-template-columns: 65% 35%;
+            padding: 10px;
+        }
+
+        .list_info{
+            padding-left: 20px;
+            padding-top: 110px;
+            padding-bottom: 100px;
+        }
+
+        table{
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 2em;
+            text-align: center;
+            box-shadow: 5px 10px rgb(129, 116, 116);
+        }
+
+        th{
+            background-color: #333;
+            color: white;
+            padding: 15px 15px;
+        }
+
+        th, td{
+            border: 2px solid black;
+        }
+
+        td{
+            padding: 10px 10px;
+        }
+
+        td:hover{
+            background-color: goldenrod;
+        }
+
+        input{
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        .confirm{
+            background-color: goldenrod;
+            padding: 10px;
+            margin-top: 20px;
+            border-top: 1px solid;
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <ul>
+            <li><a href="star.html">Home</a></li>
+            <li><a href="now_showing.html">Now showing</a></li>
+            <li><a href="Ticket.html" class="active">Ticket</a></li>
+        </ul>  
+    </nav>
+    <header>
+        <img src="images/1771660.png" id="logo" alt="City Cinema Logo" title="City Cinema Logo"><br>
+        <h1>City Cinema</h1>
+    </header>
+    <div class="container">
+        <div class="tab_list">
+            <div class="tab_info">
+                <table>
+                    <caption><h3>SCREEN</h3></caption>
+                    <tr onmouseover="rowfind(this)">
+                        <th>Row A</th>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                    </tr>
+                    <tr onmouseover="rowfind(this)">
+                        <th>Row B</th>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                    </tr>
+                    <tr onmouseover="rowfind(this)">
+                        <th>Row C</th>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="list_info">
+                <p>Cinema:</p>
+                <h3 id="cinname"></h3><br>
+                <p>Movie:</p>
+                <h3 id="movname"></h3><br>
+                <p>Date:</p>
+                <h3 id="movtime"></h3><br>
+                <p>House No:</p>
+                <h3 id="movhouse"></h3>
+            </div>
+            <script>
+                document.querySelector("#cinname").innerHTML=localStorage.getItem("cinname");
+                document.querySelector("#movname").innerHTML=localStorage.getItem("namevalue");
+                document.querySelector("#movtime").innerHTML=localStorage.getItem("timevalue");
+                document.querySelector("#movhouse").innerHTML=localStorage.getItem("housevalue");
+            </script>
+        </div>  
+        <div class="confirm">
+            <h3>Seat Booked:</h3>
+            <div id="booked_seat"></div>
+            
+            <form method="get" action="print.html">
+                <input type="submit" value="Confirm" onclick="passdata()">
+            </form>
+        </div>
+    </div>
+    
+    <footer id="footer">
+        <p>Copyright of resources belong to corresponding copyright owners - fair use for educational purposes  / <a href="star.html">Home</a> / <a href="design.html">Design</a> /</p>
+    </footer>
+</body>
+</html>
+<script>
+    mytd=document.querySelectorAll("td");
+    var seats=new Array();
+    for(i=0;i<mytd.length;i++){
+        mytd[i].addEventListener('click', function(){
+            document.querySelector("#booked_seat").innerHTML+=`<h2>${r+this.cellIndex}</h2>`;
+            this.style.backgroundColor='red';
+            seats.push(`${r+this.cellIndex}`);                
+        }, {once:true});            
+    }
+
+    function passdata(){
+        var a = document.querySelector("#cinname").innerHTML;
+        var b = document.querySelector("#movname").innerHTML;
+        var c = document.querySelector("#movtime").innerHTML;
+        var d = document.querySelector("#movhouse").innerHTML;
+
+        window.localStorage.setItem("seats", JSON.stringify(seats));
+        localStorage.setItem("a", a);
+        localStorage.setItem("b", b);
+        localStorage.setItem("c", c);
+        localStorage.setItem("d", d);
+    }
+</script>
