@@ -1,0 +1,101 @@
+body{
+    background-color: lavenderblush;
+    font-size: 20px;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    min-width: 900px;
+    margin: 0 0 0 200px;
+}
+
+#navbar{
+    overflow: hidden;
+    background-color: #333;
+    width: 200px;
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    border-right: 1px solid rgb(0, 0, 0);
+}
+
+#navbar ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+   
+#navbar a{
+
+    display: block;
+    color: gray;
+    text-decoration: none;
+    font-size: 25px;
+    width: 100%;
+    padding: 20px 0 20px 20px;
+    border-radius: 25px;
+    border-bottom: 1px solid rgb(221, 196, 196);
+}
+
+#navbar a:hover:not(.active){
+    background: rgb(141, 91, 91);
+    color: white;
+}
+
+.active {
+    pointer-events: none;
+    color: white !important;
+    background-color: rgb(141, 91, 91);
+}
+
+header{
+    background-color: goldenrod;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid;
+}
+
+#logo{
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+   padding-top: 50px;
+   width: 150px;
+   position: relative;
+   animation-name: movRot;
+   animation-duration: 3s;
+}
+
+@keyframes movRot{
+    0% {transform: rotate(0deg);right:0px;}
+    50% {transform: rotate(-360deg);right: 45%;}
+    100% {transform: rotate(0deg);right: 0%;}
+}
+
+h1{
+    text-align: center;
+    font-size: 60px;
+}
+
+#footer{
+    background-color: rgb(141, 91, 91);
+    color: white;
+    text-align: center;
+    border-top: 1px solid black;
+    padding: 30px;
+}
+
+#footer a{
+    color: black;
+}
+
+#footer p{
+    margin: 0%;
+}
+
+
+
+
+
+
+
+    
+
